@@ -1,5 +1,3 @@
-# scripts/sentiment_analysis.py
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
 
@@ -62,3 +60,12 @@ def analyze_sentiment_textblob(df, text_column):
     df['sentiment_label'] = df['sentiment'].apply(lambda x: 'positive' if x > 0 else 'negative' if x < 0 else 'neutral')
     
     return df
+
+def calculate_textblob_sentiment(data, column):
+    data['textblob_sentiment'] = data[column].apply(lambda x: TextBlob(x).sentiment.polarity)
+    return data
+
+def calculate_vader_sentiment(data, column):
+    sia = SentimentIntensityAnalyzer()
+    data['vader_sentiment'] = data[column].apply(lambda x: sia.polarity_scores(x)['compound'])
+    return data
