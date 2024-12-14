@@ -1,4 +1,5 @@
 import re
+import matplotlib.pyplot as plt
 
 def extract_domain(email):
     match = re.search(r'@([\w.-]+)', email)
