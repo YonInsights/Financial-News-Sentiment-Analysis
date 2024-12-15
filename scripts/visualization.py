@@ -84,3 +84,14 @@ def plot_heatmap(data):
     plt.xlabel('Day of Week')
     plt.ylabel('Hour of Day')
     plt.show()
+
+# Function to plot stock with sma
+def plot_stock_with_sma(df):
+    """Plot stock prices with SMA."""
+    plt.figure(figsize=(10, 6))
+    plt.plot(df.index, df['Close'], label='Close Price')
+    plt.plot(df.index, df['SMA'], label='SMA (20)')
+    plt.title("Stock Price with SMA")
+    plt.legend()
+    plt.show()
+
