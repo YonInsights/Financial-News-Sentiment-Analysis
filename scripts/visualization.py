@@ -95,3 +95,17 @@ def plot_stock_with_sma(df):
     plt.legend()
     plt.show()
 
+
+# Set plot style
+def plot_daily_sentiment(sentiment_df):
+    """
+    Plot daily sentiment scores over time.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.plot(sentiment_df['date'], sentiment_df['average_sentiment'], marker='o')
+    plt.title("Daily Sentiment Scores")
+    plt.xlabel("Date")
+    plt.ylabel("Average Sentiment")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()

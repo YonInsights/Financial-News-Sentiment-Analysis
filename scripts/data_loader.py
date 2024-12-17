@@ -72,28 +72,4 @@ def prepare_news_data(file_path: str) -> pd.DataFrame:
 def prepare_stock_data(file_path: str) -> pd.DataFrame:
     """
     Prepares the stock dataset for further analysis.
-    Ensures normalized date format and basic stock-related preprocessing.
-
-    Args:
-        file_path (str): Path to the stock dataset.
-
-    Returns:
-        pd.DataFrame: Preprocessed stock dataset.
-    """
-    required_columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    stock_df = load_data(file_path, required_columns)
-    # Retain only relevant columns for stock analysis
-    return stock_df[['date', 'Open', 'High', 'Low', 'Close', 'Volume']]
-
-if __name__ == "__main__":
-    # Example file paths (replace these with actual paths during testing)
-    news_file = "data/news.csv"  # Replace with your news dataset path
-    stock_file = "data/stock_prices.csv"  # Replace with your stock dataset path
-
-    # Prepare the datasets
-    news_data = prepare_news_data(news_file)
-    stock_data = prepare_stock_data(stock_file)
-
-    # Print previews of prepared datasets
-    print(news_data.head())
-    print(stock_data.head())
+    Ensures normalized date format and basic stock-related preprocessing
