@@ -1,5 +1,6 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
+import pandas as pd
 
 def initialize_vader():
     """
@@ -69,3 +70,47 @@ def calculate_vader_sentiment(data, column):
     sia = SentimentIntensityAnalyzer()
     data['vader_sentiment'] = data[column].apply(lambda x: sia.polarity_scores(x)['compound'])
     return data
+
+# New functions for Task 3
+def aggregate_daily_sentiment(df, date_column, sentiment_column):
+    """
+    Aggregates average daily sentiment scores.
+
+    Parameters:
+    - df (pd.DataFrame): The dataset containing the sentiment scores.
+    - date_column (str): The column name representing the date.
+    - sentiment_column (str): The column name representing sentiment scores.
+
+    Returns:
+    - pd.DataFrame: A dataframe with daily average sentiment scores.
+    """
+    # Ensure the date column is a datetime type
+    df[date_column] = pd.to_datetime(df[date_column])
+
+    # Group by date and compute average sentiment
+    daily_sentiment = df.groupby(df[date_column].dt.date)[sentiment_column].mean().reset_index()
+    daily_sentiment.columns = ['date', 'average_sentiment']
+    
+    return daily_sentiment
+
+def preprocess_sentiment_data(file_path, text_column):
+    """
+    Loads, analyzes, and aggregates sentiment data from a news dataset.
+
+    Parameters:
+    - file_path (str): Path to the news CSV file.
+    - text_column (str): The column containing news headlines.
+
+    Returns:
+    - pd.DataFrame: Preprocessed and aggregated daily sentiment data.
+    """
+    # Load data
+    news_df = pd.read_csv(file_path)
+    
+    # Analyze sentiment
+    news_df = analyze_sentiment_vader(news_df, text_column)
+    
+    # Aggregate daily sentiment scores
+    daily_sentiment = aggregate_daily_sentiment(news_df, 'date', 'sentiment_score')
+    
+    return daily_sentiment
